@@ -1,6 +1,6 @@
 package com.example.monitoringapplication.ui.viewmodel
 
-import android.os.Message
+
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
-import java.lang.Error
+
 
 class DetailMhsViewModel(
     savedStateHandle: SavedStateHandle,
@@ -24,7 +24,7 @@ class DetailMhsViewModel(
     ) : ViewModel(){
     private val nim: String = checkNotNull(savedStateHandle[DestinasiDetail.NIM])
 
-    val detailUiState: StateFlow<DetailUiState> = repositoryMhs.getMhs(_nim )
+    val detailUiState: StateFlow<DetailUiState> = repositoryMhs.getMhs(nim )
         .filterNotNull()
         .map {
             DetailUiState(
