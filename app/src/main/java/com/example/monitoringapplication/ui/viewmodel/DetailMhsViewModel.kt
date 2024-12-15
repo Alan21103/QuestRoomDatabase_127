@@ -15,16 +15,17 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 
 class DetailMhsViewModel(
     savedStateHandle: SavedStateHandle,
     private val repositoryMhs: RepositoryMhs,
 
-    ) : ViewModel(){
+    ) : ViewModel() {
     private val nim: String = checkNotNull(savedStateHandle[DestinasiDetail.NIM])
 
-    val detailUiState: StateFlow<DetailUiState> = repositoryMhs.getMhs(nim )
+    val detailUiState: StateFlow<DetailUiState> = repositoryMhs.getMhs(nim)
         .filterNotNull()
         .map {
             DetailUiState(
@@ -41,7 +42,7 @@ class DetailMhsViewModel(
                 DetailUiState(
                     isLoading = false,
                     isError = true,
-                    erorrMessage = it.message ?: "Terjadi Kesalahan",
+                    errorMessage = it.message ?: "Terjadi kesalahan",
                 )
             )
         }
@@ -52,28 +53,35 @@ class DetailMhsViewModel(
                 isLoading = true,
             ),
         )
+
+    fun deleteMhs() {
+        detailUiState.value.detailUiEvent.toMahasiswaEntity().let {
+            viewModelScope.launch {
+                repositoryMhs.deleteMhs(it)
+            }
+        }
     }
+}
 
 data class DetailUiState(
-    val detailUiEvent: MahasiswaEvent = MahasiswaEvent(),
+    val detailUiEvent: MahasiswaEvent = MahasiswaEvent (),
     val isLoading: Boolean = false,
     val isError: Boolean = false,
-    val erorrMessage: String = ""
-
+    val errorMessage: String = ""
 ) {
     val isUiEventEmpty: Boolean
         get() = detailUiEvent == MahasiswaEvent()
 
     val isUiEventNotEmpty: Boolean
-        get() = detailUiEvent != MahasiswaEvent()
+        get() = detailUiEvent != MahasiswaEvent ()
 }
 
 /*
-* Data class untuk menampung data yang akan ditampilkan di Ui
- */
+Data class untuk menampung data yang akan ditampilkan di UI
+*/
 
 //memindahkan data dari entity ke ui
-fun Mahasiswa.toDetailUiEvent(): MahasiswaEvent{
+fun Mahasiswa.toDetailUiEvent () : MahasiswaEvent {
     return MahasiswaEvent(
         nim = nim,
         nama = nama,
