@@ -15,6 +15,26 @@ object PenyediaViewModel{
                 krsApp().containerApp.repositoryMhs
             )
         }
+
+        initializer {
+            HomeMhsViewModel(
+                krsApp().containerApp.repositoryMhs
+            )
+        }
+
+        initializer {
+            DetailMhsViewModel(
+                createSavedStateHandle(),
+                krsApp().containerApp.repositoryMhs,
+            )
+        }
+
+        initializer {
+            UpdateMhsViewModel(
+                createSavedStateHandle(),
+                krsApp().containerApp.repositoryMhs,
+            )
+        }
     }
 }
 
