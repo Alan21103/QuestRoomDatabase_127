@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class MahasiswaViewModel(private val repositoryMhs: RepositoryMhs) : ViewModel() {
 
-    var uiState by mutableStateOf(MhsUiState())
+    var uiState by mutableStateOf(MhsUIState())
 
     //Memperbarui state berdasarkan input pengguna
     fun updateState(mahasiswaEvent: MahasiswaEvent) {
@@ -66,7 +66,7 @@ class MahasiswaViewModel(private val repositoryMhs: RepositoryMhs) : ViewModel()
     }
 }
 
-data class MhsUiState(
+data class MhsUIState(
     val mahasiswaEvent: MahasiswaEvent = MahasiswaEvent(),
     val isEntryValid: FormErrorState = FormErrorState(),
     val snackBarMessage: String? = null,
