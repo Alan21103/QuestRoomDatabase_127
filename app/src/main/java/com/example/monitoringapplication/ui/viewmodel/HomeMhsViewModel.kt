@@ -1,10 +1,8 @@
 package com.example.monitoringapplication.ui.viewmodel
 
-import androidx.core.app.NotificationCompat.MessagingStyle.Message
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.monitoringapplication.data.entity.Mahasiswa
-import com.example.monitoringapplication.repository.LocalRepositoryMhs
 import com.example.monitoringapplication.repository.RepositoryMhs
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,7 +17,7 @@ class HomeMhsViewModel(
     private val  repositoryMhs: RepositoryMhs
 ) : ViewModel(){
 
-    val homeUiState: StateFlow<HomeUiState> = repositoryMhs.getAllMahasiswa()
+    val homeUiState: StateFlow<HomeUiState> = repositoryMhs.getAllMhs()
         .filterNotNull()
         .map {
             HomeUiState(
